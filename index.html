@@ -1,0 +1,29 @@
+<!doctype html>
+<html ng-app="cbApp">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular.min.js"></script>
+    <script src="cb.js"></script>
+  </head>
+  <body>
+    <h2>CB</h2>
+    <div ng-controller="CBController">
+      <table>
+        <tr>
+          <th>代碼</th>
+          <th>名稱</th>
+          <th>價格</th>
+          <th>量</th>
+        </tr>
+        <tr ng-repeat="(cb_no, cb) in cbs">
+            <td>{{ cb.no }}</td>
+            <td>{{ cb.quote_name }}</td>
+            <td>{{ cb.price }}</td>
+            <td>{{ cb.qty }}</td>
+        </tr>
+      </table>
+      <form ng-submit="refresh_cb()">
+        <input class="btn-primary" type="submit" value="refresh">
+      </form>
+    </div>
+  </body>
+</html>
