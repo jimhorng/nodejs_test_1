@@ -53,6 +53,7 @@ app.get('/cb/:cb_no', function(request, response){
     }).end();
 });
 app.use(express.static(__dirname));
-server.listen(8080,'127.0.0.1',function(){
-    console.log('starting web server on port:8080...');
+var port = Number(process.env.PORT || 8080);
+server.listen(port,'127.0.0.1',function(){
+    console.log('starting web server on port:' + port + '...');
 });
