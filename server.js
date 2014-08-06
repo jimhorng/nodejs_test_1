@@ -40,8 +40,8 @@ app.get('/cb/:cb_no', function(request, response){
         var dataObj = JSON.parse(data);
         var cb_info = getCBInfo(cb_no);
         if (cb_info != null ) {
-          cb_info['price'] = dataObj.msgArray[0].h;
-          cb_info['qty'] = dataObj.msgArray[0].v;
+          cb_info['price'] = dataObj.msgArray[0].z;
+          cb_info['total_volume'] = dataObj.msgArray[0].v;
           response.set('Content-Type', 'application/json; charset=utf-8');
           response.end(JSON.stringify(cb_info));
         }

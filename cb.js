@@ -22,7 +22,7 @@ angular.module('cbApp', [])
               $scope.cbs[cb_no]['company_no'] = response.company_no;
               $scope.cbs[cb_no]['bond_short_name'] = response.bond_short_name;
               $scope.cbs[cb_no]['price'] = response.price;
-              $scope.cbs[cb_no]['qty'] = response.qty;
+              $scope.cbs[cb_no]['total_volume'] = response.total_volume;
               $scope.cbs[cb_no]['convert_price'] = response.convert_price;
               $scope.cbs[cb_no]['convert_share'] = Math.round(100000 / parseInt(response.convert_price));
             }

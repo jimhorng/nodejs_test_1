@@ -8,7 +8,7 @@
   </head>
   <body>
     <center><h1>CB大的CB網</h1></center>
-    <div ng-controller="CBController">
+    <div ng-controller="CBController" data-ng-init="refreshCB()">
       <form ng-submit="refreshCB()">
         <input class="btn-primary" type="submit" value="更新">
       </form>
@@ -17,8 +17,8 @@
           <th>CB代碼</th>
           <th>原公司代碼</th>
           <th>名稱</th>
-          <th>價格</th>
-          <th>量</th>
+          <th>今日成交價</th>
+          <th>今日量</th>
           <th>轉換價</th>
           <th>可轉換股數</th>
         </tr>
@@ -27,7 +27,7 @@
             <td>{{ cb.company_no }}</td>
             <td>{{ cb.bond_short_name }}</td>
             <td>{{ cb.price }}</td>
-            <td>{{ cb.qty }}</td>
+            <td>{{ cb.total_volume }}</td>
             <td>{{ cb.convert_price }}</td>
             <td>{{ cb.convert_share }}</td>
         </tr>
@@ -35,8 +35,11 @@
       <form ng-submit="addCB()">
         <input type="text" ng-model="CBNo"  size="30"
                placeholder="">
-        <input class="btn-primary" type="submit" value="增加CB代號">
+        <input class="btn-primary" type="submit" value="增加CB代碼">
       </form>
+    </div>
+    <div>
+    CB範例: 13371(F-再生), 28851(元大金), 28883(新光金)
     </div>
   </body>
 </html>
