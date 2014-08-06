@@ -7,22 +7,33 @@
   <body>
     <h2>CB</h2>
     <div ng-controller="CBController">
+      <form ng-submit="refreshCB()">
+        <input class="btn-primary" type="submit" value="更新">
+      </form>
       <table>
         <tr>
-          <th>代碼</th>
+          <th>CB代碼</th>
+          <th>原公司代碼</th>
           <th>名稱</th>
           <th>價格</th>
           <th>量</th>
+          <th>轉換價</th>
+          <th>可轉換股數</th>
         </tr>
         <tr ng-repeat="(cb_no, cb) in cbs">
             <td>{{ cb.no }}</td>
-            <td>{{ cb.quote_name }}</td>
+            <td>{{ cb.company_no }}</td>
+            <td>{{ cb.bond_short_name }}</td>
             <td>{{ cb.price }}</td>
             <td>{{ cb.qty }}</td>
+            <td>{{ cb.convert_price }}</td>
+            <td>{{ cb.convert_share }}</td>
         </tr>
       </table>
-      <form ng-submit="refresh_cb()">
-        <input class="btn-primary" type="submit" value="refresh">
+      <form ng-submit="addCB()">
+        <input type="text" ng-model="CBNo"  size="30"
+               placeholder="">
+        <input class="btn-primary" type="submit" value="增加CB代號">
       </form>
     </div>
   </body>

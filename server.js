@@ -1,28 +1,54 @@
 var http = require('http');
 var path = require('path');
 var express = require('express');
+var fs = require('fs');
+var csvParser = require('csv-parse');
+
+var cb_list;
+var parser = csvParser({delimiter: ',', columns: true, trim: true}, function(err, data){
+  cb_list = data;
+  console.log("DEBUG: parse: " + JSON.stringify(cb_list[0]));
+});
+
+fs.createReadStream(__dirname+'/cb_list.csv').pipe(parser);
+
+var getCBInfo = function(cb_no) {
+  for ( var i = 0 ; i < cb_list.length ; i++ ) {
+    if( cb_no == cb_list[i].cb_no ) {
+      return cb_list[i];
+    }
+  }
+  return null;
+};
+
 var app = express();
 var server = http.createServer(app);
-app.get('/tse/:cb_no', function(request, response){
-    // theUrl = 'http://mis.tse.com.tw/stock/api/getStockInfo.jsp?ex_ch=otc_' + cb_no + '.tw_20140805&json=1&delay=0&_=1407230279';
-    // xmlHttp = new XMLHttpRequest();
-    // xmlHttp.open( "GET", theUrl, false );
-    // xmlHttp.send( null );
-    // response.end(xmlHttp.responseText);
 
-    cb_no = request.params.cb_no;
+app.get('/cb/:cb_no', function(request, response){
+
+    var cb_no = request.params.cb_no;
 
     var options = {
       host: 'mis.tse.com.tw',
       port: 80,
-      path: '/stock/api/getStockInfo.jsp?ex_ch=otc_' + cb_no + '.tw_20140805&json=1&delay=0&_=1407230279',
+      path: '/stock/api/getStockInfo.jsp?ex_ch=otc_' + cb_no + '.tw_20140806&json=1&delay=0',
       method: 'GET'
     };
 
     http.request(options, function(res) {
-      res.on('data', function (chunk) {
-        console.log('BODY: ' + chunk);
-        response.end(chunk);
+      res.on('data', function (data) {
+        var dataObj = JSON.parse(data);
+        var cb_info = getCBInfo(cb_no);
+        if (cb_info != null ) {
+          cb_info['price'] = dataObj.msgArray[0].h;
+          cb_info['qty'] = dataObj.msgArray[0].v;
+          response.set('Content-Type', 'application/json; charset=utf-8');
+          response.end(JSON.stringify(cb_info));
+        }
+        else {
+          cb_info = {};
+          response.send(404);
+        }
       });
     }).end();
 });
