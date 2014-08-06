@@ -54,5 +54,5 @@ app.get('/cb/:cb_no', function(request, response){
 });
 app.use(express.static(__dirname));
 server.listen(8080,'127.0.0.1',function(){
-    console.log('starting..');
+    console.log('starting web server on port:8080...');
 });
