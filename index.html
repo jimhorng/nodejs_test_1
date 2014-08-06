@@ -22,15 +22,17 @@
           <th>轉換價</th>
           <th>可轉換股數</th>
         </tr>
-        <tr ng-repeat="(cb_no, cb) in cbs">
-            <td>{{ cb.no }}</td>
-            <td>{{ cb.company_no }}</td>
-            <td>{{ cb.bond_short_name }}</td>
-            <td>{{ cb.price }}</td>
-            <td>{{ cb.total_volume }}</td>
-            <td>{{ cb.convert_price }}</td>
-            <td>{{ cb.convert_share }}</td>
-        </tr>
+        <tbody>
+          <tr ng-repeat="(cb_no, cb) in cbs">
+              <td>{{ cb.no }}</td>
+              <td>{{ cb.company_no }}</td>
+              <td>{{ cb.bond_short_name }}</td>
+              <td>{{ cb.price }}</td>
+              <td>{{ cb.total_volume }}</td>
+              <td>{{ cb.convert_price }}</td>
+              <td>{{ cb.convert_share }}</td>
+          </tr>
+        </tbody>
       </table>
       <form ng-submit="addCB()">
         <input type="text" ng-model="CBNo"  size="30"
@@ -38,8 +40,8 @@
         <input class="btn-primary" type="submit" value="增加CB代碼">
       </form>
     </div>
-    <div>
-    CB範例: 13371(F-再生), 28851(元大金), 28883(新光金)
+    <div class="container-fluid">
+      <p class="bg-primary">CB範例: 13371(F-再生), 28851(元大金), 28883(新光金)</p>
     </div>
   </body>
 </html>
