@@ -54,6 +54,6 @@ app.get('/cb/:cb_no', function(request, response){
 });
 app.use(express.static(__dirname));
 var port = Number(process.env.PORT || 8080);
-server.listen(port, '127.0.0.1', function(){
+server.listen(port, function(){
     console.log('starting web server on port:' + port + '...');
 });
