@@ -2,16 +2,64 @@
 <html ng-app="cbApp">
     <head>
         <title> CB大的CB網 </title>
-        <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
         <script src="static/angular/angular.min.js"></script>
+        <script src="static/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
         <script src="cb.js"></script>
     </head>
     <body>
         <center><h1>CB大的CB網</h1></center>
         <div ng-controller="CBController" data-ng-init="refreshCB()">
+            <script type="text/ng-template" id="CBDetail.html">
+                <div class="modal-header">
+                    <center><h3 class="modal-title">{{ cb.bond_short_name }}({{ cb.cb_no }})</h3>
+                    </center>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>原公司代碼</th>
+                            <th>今日成交價</th>
+                            <th>今日量</th>
+                            <th>轉換價</th>
+                            <th>可轉換股數</th>
+                        </tr>
+                        <tbody>
+                            <tr>
+                                <td>{{ cb.company_no }}</td>
+                                <td>{{ cb.price }}</td>
+                                <td>{{ cb.total_volume }}</td>
+                                <td>{{ cb.convert_price }}</td>
+                                <td>{{ cb.convert_share }}</td>
+                            </tr>
+                        </tbody>
+                        <tr>
+                            <th>經銷商</th>
+                            <th>信託公司</th>
+                            <th>發行日</th>
+                            <th>結束日</th>
+                            <th>發行量</th>
+                        </tr>
+                        <tbody>
+                            <tr>
+                                <td>{{ cb.sell_broker }}</td>
+                                <td>{{ cb.trustee }}</td>
+                                <td>{{ cb.publish_date }}</td>
+                                <td>{{ cb.expire_date }}</td>
+                                <td>{{ cb.publish_qty }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" ng-click="close()">X</button>
+                </div>
+            </script>
+
             <form ng-submit="refreshCB()">
                 <input class="btn-primary" type="submit" value="更新">
             </form>
+            <div ng-show="selected">Selection from a modal: {{ selected }}</div>
             <table class="table table-hover">
                 <tr>
                     <th>CB代碼</th>
@@ -24,7 +72,7 @@
                 </tr>
                 <tbody>
                     <tr ng-repeat="(cb_no, cb) in cbs">
-                            <td>{{ cb.no }}</td>
+                            <td ng-click="open(cb)">{{ cb.cb_no }}</td>
                             <td>{{ cb.company_no }}</td>
                             <td>{{ cb.bond_short_name }}</td>
                             <td>{{ cb.price }}</td>

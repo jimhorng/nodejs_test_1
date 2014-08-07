@@ -42,6 +42,7 @@ app.get('/cb/:cb_no', function(request, response){
                 if (cb_info != null ) {
                     cb_info['price'] = dataObj.msgArray[0].z;
                     cb_info['total_volume'] = dataObj.msgArray[0].v;
+                    cb_info['convert_share'] = Math.round(100000 / parseInt(cb_info.convert_price));
                     response.set('Content-Type', 'application/json; charset=utf-8');
                     response.end(JSON.stringify(cb_info));
                 }
