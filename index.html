@@ -71,8 +71,8 @@
                     <th>可轉換股數</th>
                 </tr>
                 <tbody>
-                    <tr ng-repeat="(cb_no, cb) in cbs">
-                            <td ng-click="open(cb)">{{ cb.cb_no }}</td>
+                    <tr ng-repeat="(cb_no, cb) in cbs" ng-click="open(cb)">
+                            <td>{{ cb.cb_no }}</td>
                             <td>{{ cb.company_no }}</td>
                             <td>{{ cb.bond_short_name }}</td>
                             <td>{{ cb.price }}</td>
