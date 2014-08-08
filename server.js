@@ -3,6 +3,7 @@ var path = require('path');
 var express = require('express');
 var fs = require('fs');
 var csvParser = require('csv-parse');
+var moment = require('moment');
 
 var cb_list;
 var parser = csvParser({delimiter: ',', columns: true, trim: true}, function(err, data){
@@ -27,11 +28,12 @@ var server = http.createServer(app);
 app.get('/cb/:cb_no', function(request, response){
 
         var cb_no = request.params.cb_no;
+        var today = moment().format("YYYYMMDD");
 
         var options = {
             host: 'mis.tse.com.tw',
             port: 80,
-            path: '/stock/api/getStockInfo.jsp?ex_ch=otc_' + cb_no + '.tw_20140806&json=1&delay=0',
+            path: '/stock/api/getStockInfo.jsp?ex_ch=otc_' + cb_no + '.tw_' + today + '&json=1&delay=0',
             method: 'GET'
         };
 
