@@ -5,7 +5,7 @@ var CBController = function($scope, $http, $modal) {
 
     $scope.cbs = {
         '17043': {no: '17043'},
-        '16112': {no: '16112'},
+        '29151': {no: '29151'},
         '26105': {no: '26105'}
     }
 
