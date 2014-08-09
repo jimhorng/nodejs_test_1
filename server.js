@@ -28,12 +28,17 @@ var server = http.createServer(app);
 app.get('/cb/:cb_no', function(request, response){
 
         var cb_no = request.params.cb_no;
-        var today = moment().format("YYYYMMDD");
+
+        var today = moment();
+        var latest_trade_day = today;
+        if ( today.isoWeekday() > 5 ) {
+            latest_trade_day = today.subtract('days', today.isoWeekday() - 5);
+        }
 
         var options = {
             host: 'mis.tse.com.tw',
             port: 80,
-            path: '/stock/api/getStockInfo.jsp?ex_ch=otc_' + cb_no + '.tw_' + today + '&json=1&delay=0',
+            path: '/stock/api/getStockInfo.jsp?ex_ch=otc_' + cb_no + '.tw_' + latest_trade_day.format("YYYYMMDD") + '&json=1&delay=0',
             method: 'GET'
         };
 
@@ -41,6 +46,7 @@ app.get('/cb/:cb_no', function(request, response){
             res.on('data', function (data) {
                 var dataObj = JSON.parse(data);
                 var cb_info = getCBInfo(cb_no);
+                console.log("DEBUG: getting cb: " + cb_no);
                 if (cb_info != null ) {
                     cb_info['price'] = dataObj.msgArray[0].z;
                     cb_info['total_volume'] = dataObj.msgArray[0].v;
@@ -55,7 +61,9 @@ app.get('/cb/:cb_no', function(request, response){
             });
         }).end();
 });
+
 app.use(express.static(__dirname));
+
 var port = Number(process.env.PORT || 8080);
 server.listen(port, function(){
         console.log('starting web server on port:' + port + '...');
