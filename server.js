@@ -32,7 +32,7 @@ app.get('/cb/:cb_no', function(request, response){
         var today = moment();
         var latest_trade_day = today;
         if ( today.isoWeekday() > 5 ) {
-            latest_trade_day = today.subtract('days', today.isoWeekday() - 5);
+            latest_trade_day = today.subtract(today.isoWeekday() - 5, 'days');
         }
 
         var options = {
@@ -48,8 +48,8 @@ app.get('/cb/:cb_no', function(request, response){
                 var cb_info = getCBInfo(cb_no);
                 console.log("DEBUG: getting cb: " + cb_no);
                 if (cb_info != null ) {
-                    cb_info['price'] = dataObj.msgArray[0].z;
-                    cb_info['total_volume'] = dataObj.msgArray[0].v;
+                    cb_info['price'] = Number(dataObj.msgArray[0].z);
+                    cb_info['total_volume'] = Number(dataObj.msgArray[0].v);
                     cb_info['convert_share'] = Math.round(100000 / parseInt(cb_info.convert_price));
                     response.set('Content-Type', 'application/json; charset=utf-8');
                     response.end(JSON.stringify(cb_info));

@@ -6,9 +6,9 @@
         <link href="static/ng-table.min.css" rel="stylesheet">
         <link href="static/cb.css" rel="stylesheet">
 
-        <script src="static/angular/angular.min.js"></script>
-        <script src="static/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-        <script src="static/ng-table.min.js"></script>
+        <script src="static/angular/angular.js"></script>
+        <script src="static/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+        <script src="static/ng-table.js"></script>
         <script src="cb.js"></script>
     </head>
     <body>
@@ -61,33 +61,19 @@
                 </div>
             </script>
 
-            <form ng-submit="refreshCB()">
-                <input class="btn-primary" type="submit" value="更新">
-            </form>
-            <button ng-click="tableParams.sorting = {}" class="btn btn-default pull-right">Clear sorting</button>
+            <button ng-click="refreshCB()" class="btn btn-default">更新</button>
+            <button ng-click="tableParams.sorting = {}" class="btn btn-default">不排序</button>
+            <br/><br/>
             <table ng-table="tableParams" class="table table-hover table-header">
-<!--                 <thead>
-                    <tr>
-                        <th>CB代碼</th>
-                        <th>原公司代碼</th>
-                        <th>名稱</th>
-                        <th>今日成交價</th>
-                        <th>今日量</th>
-                        <th>轉換價</th>
-                        <th>可轉換股數</th>
-                    </tr>
-                </thead>
-                <tbody> -->
-                    <tr ng-repeat="cb in $data" ng-click="open(cb)">
-                            <td data-title="'CB代碼'">{{ cb.cb_no }}</td>
-                            <td>{{ cb.company_no }}</td>
-                            <td>{{ cb.bond_short_name }}</td>
-                            <td data-title="'今日成交價'" sortable="'price'">{{ cb.price }}</td>
-                            <td>{{ cb.total_volume }}</td>
-                            <td>{{ cb.convert_price }}</td>
-                            <td>{{ cb.convert_share }}</td>
-                    </tr>
-                <!-- </tbody> -->
+                <tr ng-repeat="cb in $data" ng-click="open(cb)">
+                        <td data-title="'CB代碼'">{{ cb.cb_no }}</td>
+                        <td data-title="'原公司代碼'">{{ cb.company_no }}</td>
+                        <td data-title="'名稱'">{{ cb.bond_short_name }}</td>
+                        <td data-title="'今日成交價'" sortable="'price'">{{ cb.price }}</td>
+                        <td data-title="'今日量'" sortable="'total_volume'">{{ cb.total_volume }}</td>
+                        <td data-title="'轉換價'" sortable="'convert_price'">{{ cb.convert_price }}</td>
+                        <td data-title="'可轉換股數'" sortable="'convert_share'">{{ cb.convert_share }}</td>
+                </tr>
             </table>
             <form ng-submit="addCB()">
                 <input type="text" ng-model="CBNo"    size="30"
