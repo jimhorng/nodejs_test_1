@@ -62,7 +62,7 @@
             </script>
 
             <button ng-click="refreshCB()" class="btn btn-default">更新</button>
-            <button ng-click="tableParams.sorting = {}" class="btn btn-default">不排序</button>
+            <button ng-click="tableParams.sorting({})" class="btn btn-default">不排序</button>
             <br/><br/>
             <table ng-table="tableParams" class="table table-hover table-header">
                 <tr ng-repeat="cb in $data" ng-click="open(cb)">
