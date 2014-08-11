@@ -62,17 +62,17 @@
             </script>
 
             <button ng-click="refreshCB()" class="btn btn-default">更新</button>
-            <button ng-click="tableParams.sorting({})" class="btn btn-default">不排序</button>
+            <button ng-click="resetSortFilter()" class="btn btn-default">重來</button>
             <br/><br/>
-            <table ng-table="tableParams" class="table table-hover table-header">
+            <table ng-table="tableParams" show-filter="true" class="table table-hover table-header">
                 <tr ng-repeat="cb in $data" ng-click="open(cb)">
-                        <td data-title="'CB代碼'">{{ cb.cb_no }}</td>
-                        <td data-title="'原公司代碼'">{{ cb.company_no }}</td>
-                        <td data-title="'名稱'">{{ cb.bond_short_name }}</td>
-                        <td data-title="'今日成交價'" sortable="'price'">{{ cb.price }}</td>
-                        <td data-title="'今日量'" sortable="'total_volume'">{{ cb.total_volume }}</td>
-                        <td data-title="'轉換價'" sortable="'convert_price'">{{ cb.convert_price }}</td>
-                        <td data-title="'可轉換股數'" sortable="'convert_share'">{{ cb.convert_share }}</td>
+                        <td data-title="'CB代碼'" filter="{ 'cb_no': 'text' }">{{ cb.cb_no }}</td>
+                        <td data-title="'原公司代碼'" filter="{ 'company_no': 'text' }">{{ cb.company_no }}</td>
+                        <td data-title="'名稱'" filter="{ 'bond_short_name': 'text' }">{{ cb.bond_short_name }}</td>
+                        <td data-title="'今日成交價'" sortable="'price'" filter="{ 'price': 'text' }">{{ cb.price }}</td>
+                        <td data-title="'今日量'" sortable="'total_volume'" filter="{ 'total_volume': 'text' }">{{ cb.total_volume }}</td>
+                        <td data-title="'轉換價'" sortable="'convert_price'" filter="{ 'convert_price': 'text' }">{{ cb.convert_price }}</td>
+                        <td data-title="'可轉換股數'" sortable="'convert_share'" filter="{ 'convert_share': 'text' }">{{ cb.convert_share }}</td>
                 </tr>
             </table>
             <form ng-submit="addCB()">

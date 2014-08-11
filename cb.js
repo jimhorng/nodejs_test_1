@@ -54,13 +54,22 @@ var CBController = function($scope, $http, $modal, $filter, $q, ngTableParams) {
         total: $scope.cbs_data.length, // length of data
         getData: function($defer, params) {
             // use build-in angular filter
+            var filteredData = params.filter() ?
+                    $filter('filter')($scope.cbs_data, params.filter()) :
+                    $scope.cbs_data;
             var orderedData = params.sorting() ?
-                    $filter('orderBy')($scope.cbs_data, params.orderBy()) :
+                    $filter('orderBy')(filteredData, params.orderBy()) :
                     $scope.cbs_data;
 
+            params.total(orderedData.length);
             $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
         }
     });
+
+    $scope.resetSortFilter = function() {
+        $scope.tableParams.sorting({});
+        $scope.tableParams.filter({});
+    }
 
     $scope.addCB = function() {
         $scope.cbs[$scope.CBNo] = {no: $scope.CBNo};
