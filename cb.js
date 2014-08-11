@@ -1,7 +1,7 @@
 angular.module('cbApp', ['ui.bootstrap', 'ngTable']);
  
 
-var CBController = function($scope, $http, $modal, $filter, ngTableParams) {
+var CBController = function($scope, $http, $modal, $filter, $q, ngTableParams) {
 
     $scope.cbs = {
         '17043': {},
@@ -13,21 +13,18 @@ var CBController = function($scope, $http, $modal, $filter, ngTableParams) {
 
     $scope.refreshCB = function() {
         $scope.cbs_data = [];
+        var api_promises = [];
         for( var cb_no in $scope.cbs ) {
             var uri = '/cb/' + cb_no
             var config = {
                 responseType:"json"
             };
-            $http.get(uri, config)
+
+            var api_promise = $http.get(uri, config)
                 .success((function(cb_no) {
                     return function(response) {
                         console.log('cb_no: ' + cb_no);
-                        // $scope.cbs[cb_no] = response;
                         $scope.cbs_data.push(response);
-
-                        if ($scope.cbs_data.length > 0) {
-                            $scope.tableParams.reload();
-                        }
                     }
                 })(cb_no))
                 .error(function (data, status, headers, config) {
@@ -36,7 +33,18 @@ var CBController = function($scope, $http, $modal, $filter, ngTableParams) {
                         }
                     }
                 );
+
+            api_promises.push(api_promise);
         }
+
+        $q.all(api_promises)
+        .then(function () {
+                if ($scope.cbs_data.length > 0) {
+                    $scope.tableParams.reload();
+               }
+            }
+        );
+
     };
 
     $scope.tableParams = new ngTableParams({
