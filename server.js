@@ -25,29 +25,32 @@ var getCBInfo = function(cb_no) {
 var app = express();
 var server = http.createServer(app);
 
-app.get('/cb/:cb_no', function(request, response){
+app.get('/cb/:cb_no/:date', function(request, response){
 
         var cb_no = request.params.cb_no;
+        var date = request.params.date;
 
-        var today = moment();
-        var latest_trade_day = today;
-        if ( today.isoWeekday() > 5 ) {
-            latest_trade_day = today.subtract(today.isoWeekday() - 5, 'days');
-        }
+        // var today = moment();
+        // var latest_trade_day = today;
+        // if ( today.isoWeekday() > 5 ) {
+        //     latest_trade_day = today.subtract(today.isoWeekday() - 5, 'days');
+        // }
 
         var options = {
             host: 'mis.tse.com.tw',
             port: 80,
-            path: '/stock/api/getStockInfo.jsp?ex_ch=otc_' + cb_no + '.tw_' + latest_trade_day.format("YYYYMMDD") + '&json=1&delay=0',
+            path: '/stock/api/getStockInfo.jsp?ex_ch=otc_' + cb_no + '.tw_' + date + '&json=1&delay=0',
             method: 'GET'
         };
 
         http.request(options, function(res) {
             res.on('data', function (data) {
                 var dataObj = JSON.parse(data);
-                var cb_info = getCBInfo(cb_no);
-                console.log("DEBUG: getting cb: " + cb_no);
-                if (cb_info != null ) {
+                var cb_info = (cb_no);
+                console.log("DEBUG: getting cbgetCBInfo: " + cb_no);
+                if (cb_info != null 
+                    && dataObj.hasOwnProperty('msgArray') 
+                    && dataObj.msgArray.length != 0) {
                     cb_info['price'] = Number(dataObj.msgArray[0].z);
                     cb_info['total_volume'] = Number(dataObj.msgArray[0].v);
                     cb_info['convert_share'] = Math.round(100000 / parseInt(cb_info.convert_price));

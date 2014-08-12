@@ -15,7 +15,8 @@ var CBController = function($scope, $http, $modal, $filter, $q, ngTableParams) {
         $scope.cbs_data = [];
         var api_promises = [];
         for( var cb_no in $scope.cbs ) {
-            var uri = '/cb/' + cb_no
+            var date_fmt = "" + $scope.dt.getFullYear() + ($scope.dt.getMonth()+1) + $scope.dt.getDate();
+            var uri = '/cb/' + cb_no + '/' + date_fmt;
             var config = {
                 responseType:"json"
             };
@@ -89,6 +90,35 @@ var CBController = function($scope, $http, $modal, $filter, $q, ngTableParams) {
             }
         });
     };
+
+
+    $scope.today = function() {
+        $scope.dt = new Date();
+    };
+    $scope.today();
+
+    $scope.clear = function () {
+        $scope.dt = null;
+    };
+
+    // Disable weekend selection
+    $scope.disabled = function(date, mode) {
+        return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+    };
+
+    $scope.openDP = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $scope.DPOpened = true;
+    };
+
+    $scope.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1
+    };
+
+    $scope.format = 'yyyy-MM-dd';
 };
 
 var ModalInstanceCtrl = function ($scope, $modalInstance, cb) {

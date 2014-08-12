@@ -63,6 +63,19 @@
 
             <button ng-click="refreshCB()" class="btn btn-default">更新</button>
             <button ng-click="resetSortFilter()" class="btn btn-default">重來</button>
+            <input type="text" class="ng-valid-date" 
+                    datepicker-popup="{{format}}" 
+                    ng-model="dt" is-open="DPOpened" min-date="2014-01-01" max-date="'2015-06-22'"
+                    datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
+                    ng-required="true"
+                    close-text="X" current-text="今天" clear-text="清除"
+                    readonly="readonly"/>
+            <span>
+                <button type="button" class="btn btn-default" ng-click="openDP($event)">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+            </span>
+
             <br/><br/>
             <table ng-table="tableParams" show-filter="true" class="table table-hover table-header">
                 <tr ng-repeat="cb in $data" ng-click="open(cb)">
@@ -82,7 +95,7 @@
             </form>
         </div>
         <div class="container-fluid">
-            <p class="bg-primary">CB範例: 13371(F-再生), 28851(元大金), 28883(新光金)</p>
+            <p class="bg-default">CB範例: 13371(F-再生), 28851(元大金), 28883(新光金)</p>
         </div>
     </body>
 </html>
