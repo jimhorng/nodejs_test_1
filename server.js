@@ -46,7 +46,7 @@ app.get('/cb/:cb_no/:date', function(request, response){
         http.request(options, function(res) {
             res.on('data', function (data) {
                 var dataObj = JSON.parse(data);
-                var cb_info = (cb_no);
+                var cb_info = getCBInfo(cb_no);
                 console.log("DEBUG: getting cbgetCBInfo: " + cb_no);
                 if (cb_info != null 
                     && dataObj.hasOwnProperty('msgArray') 
