@@ -50,7 +50,10 @@ var CBController = function($scope, $http, $modal, $filter, $q, ngTableParams) {
 
     $scope.tableParams = new ngTableParams({
         page: 1,            // show first page
-        count: 10           // count per page
+        count: 10,           // count per page
+        sorting: {
+            cb_no: 'asc'     // initial sorting
+        }
     }, {
         total: $scope.cbs_data.length, // length of data
         getData: function($defer, params) {

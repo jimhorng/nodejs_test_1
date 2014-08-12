@@ -80,7 +80,7 @@
             <br/><br/>
             <table ng-table="tableParams" show-filter="true" class="table table-hover table-header">
                 <tr ng-repeat="cb in $data" ng-click="open(cb)">
-                        <td data-title="'CB代碼'" filter="{ 'cb_no': 'text' }">{{ cb.cb_no }}</td>
+                        <td data-title="'CB代碼'" sortable="'cb_no'" filter="{ 'cb_no': 'text' }">{{ cb.cb_no }}</td>
                         <td data-title="'原公司代碼'" filter="{ 'company_no': 'text' }">{{ cb.company_no }}</td>
                         <td data-title="'名稱'" filter="{ 'bond_short_name': 'text' }">{{ cb.bond_short_name }}</td>
                         <td data-title="'今日成交價'" sortable="'price'" filter="{ 'price': 'text' }">{{ cb.price }}</td>
