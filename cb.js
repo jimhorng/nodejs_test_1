@@ -15,7 +15,7 @@ var CBController = function($scope, $http, $modal, $filter, $q, ngTableParams) {
         $scope.cbs_data = [];
         var api_promises = [];
         for( var cb_no in $scope.cbs ) {
-            var date_fmt = "" + $scope.dt.getFullYear() + ($scope.dt.getMonth()+1) + $scope.dt.getDate();
+            var date_fmt = moment($scope.dt).format('YYYYMMDD');
             var uri = '/cb/' + cb_no + '/' + date_fmt;
             var config = {
                 responseType:"json"
@@ -119,6 +119,11 @@ var CBController = function($scope, $http, $modal, $filter, $q, ngTableParams) {
     };
 
     $scope.format = 'yyyy-MM-dd';
+
+    $scope.$watch('dt', function(newValue, oldValue) {
+            $scope.refreshCB();
+        }, true);
+
 };
 
 var ModalInstanceCtrl = function ($scope, $modalInstance, cb) {
